@@ -161,6 +161,9 @@ ENV/
 env.bak/
 venv.bak/
 
+# Gradio local runtime files
+.gradio/
+
 # Spyder project settings
 .spyderproject
 .spyproject
