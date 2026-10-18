@@ -63,6 +63,11 @@ db.sqlite3
 db.sqlite3-journal
 prices.db
 
+# Generated audio outputs
+chinese_speech.wav
+岳阳楼记 Dylan.wav
+岳阳楼记 Uncle_Fu.wav
+
 # Flask stuff:
 instance/
 .webassets-cache
