@@ -229,3 +229,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+cat.jpeg
+chinese_speech.mp3
+speech.mp3
+speech.wav
