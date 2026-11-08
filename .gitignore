@@ -235,3 +235,11 @@ speech.mp3
 speech.wav
 
 main
+
+knowledge-base/
+evaluation/
+implementation/
+pro_implementation/
+evaluator.py
+*.bin
+chroma.sqlite3
