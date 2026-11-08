@@ -238,7 +238,6 @@ main
 
 knowledge-base/
 evaluation/
-implementation/
 pro_implementation/
 evaluator.py
 *.bin
