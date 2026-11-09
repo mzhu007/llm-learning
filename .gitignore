@@ -237,7 +237,6 @@ speech.wav
 main
 
 knowledge-base/
-evaluation/
 pro_implementation/
 evaluator.py
 *.bin
