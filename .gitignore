@@ -238,6 +238,5 @@ main
 
 knowledge-base/
 pro_implementation/
-evaluator.py
 *.bin
 chroma.sqlite3
