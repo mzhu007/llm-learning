@@ -240,3 +240,4 @@ knowledge-base/
 *.bin
 chroma.sqlite3
 *.pickle
+.DS_Store
