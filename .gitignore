@@ -241,3 +241,5 @@ knowledge-base/
 chroma.sqlite3
 *.pickle
 .DS_Store
+
+lite/
