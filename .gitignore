@@ -241,5 +241,6 @@ knowledge-base/
 chroma.sqlite3
 *.pickle
 .DS_Store
+human_in.csv
 
 lite/
