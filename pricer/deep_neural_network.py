@@ -117,7 +117,39 @@ class DeepNeuralNetworkRunner:
         self.scheduler = CosineAnnealingLR(self.optimizer, T_max=10, eta_min=0)
 
         self.train_dataset = TensorDataset(self.X_train, self.y_train_norm)
-        self.train_loader = DataLoader(self.train_dataset, batch_size=64, shuffle=True)
+        # self.train_loader = DataLoader(self.train_dataset, batch_size=64, shuffle=True)
+        self.train_loader = DataLoader(self.train_dataset, batch_size=6400, shuffle=True)
+
+    def setup_for_inference(self):
+        self.vectorizer = HashingVectorizer(
+            n_features=5000,
+            stop_words="english",
+            binary=True
+        )
+
+        # Calculate normalization statistics from training prices.
+        y_train = torch.tensor(
+            [float(item.price) for item in self.train_data],
+            dtype=torch.float32
+        )
+
+        y_train_log = torch.log(y_train + 1)
+        self.y_mean = y_train_log.mean()
+        self.y_std = y_train_log.std()
+
+        self.model = DeepNeuralNetwork(5000)
+
+        if torch.cuda.is_available():
+            self.device = torch.device("cuda")
+        elif torch.backends.mps.is_available():
+            self.device = torch.device("mps")
+        else:
+            self.device = torch.device("cpu")
+
+        self.model.to(self.device)
+        self.model.eval()
+
+        print(f"Using {self.device}")
 
     def train(self, epochs=5):
         for epoch in range(1, epochs + 1):
@@ -160,9 +192,38 @@ class DeepNeuralNetworkRunner:
     def save(self, path):
         torch.save(self.model.state_dict(), path)
 
+    # def save(self, path):
+    #     checkpoint = {
+    #         "model_state_dict": self.model.state_dict(),
+    #         "y_mean": self.y_mean.cpu(),
+    #         "y_std": self.y_std.cpu(),
+    #     }
+
+    #     torch.save(checkpoint, path)
+
     def load(self, path, device="mps"):
         self.model.load_state_dict(torch.load(path, map_location=device))
         self.model.to(self.device)
+
+    # def load(self, path):
+    #     checkpoint = torch.load(
+    #         path,
+    #         map_location="cpu",
+    #         weights_only=True
+    #     )
+
+    #     self.model.cpu()
+
+    #     self.model.load_state_dict(checkpoint["model_state_dict"])
+
+    #     self.y_mean = checkpoint["y_mean"].to(self.device)
+    #     self.y_std = checkpoint["y_std"].to(self.device)
+
+    #     self.model.to(self.device)
+
+    #     del checkpoint
+
+    #     print(f"Model loaded successfully onto {self.device}")
 
     def inference(self, item):
         self.model.eval()
