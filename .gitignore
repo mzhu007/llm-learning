@@ -243,5 +243,7 @@ chroma.sqlite3
 .DS_Store
 human_in.csv
 *.pth
+price-2026*/
+wandb/
 
 lite/
