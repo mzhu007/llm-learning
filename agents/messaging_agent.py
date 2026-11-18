@@ -10,7 +10,8 @@ pushover_url = "https://api.pushover.net/1/messages.json"
 class MessagingAgent(Agent):
     name = "Messaging Agent"
     color = Agent.WHITE
-    MODEL = "anthropic/claude-haiku-5-5"
+    # MODEL = "anthropic/claude-haiku-5-5"
+    MODEL = "openai/gpt-5-nano"
 
     def __init__(self):
         """
@@ -36,17 +37,34 @@ class MessagingAgent(Agent):
         }
         requests.post(pushover_url, data=payload)
 
+    # def notify_user_of_deal(description: str, deal_price: float, estimated_true_value: float, url: str) -> str:
+    #     """
+    #     This tool notifies the user of a great deal, given a description of it, the price of the deal, and the estimated true value
+    #     """
+    #     print(f"Fake function to notify user of {description} which costs {deal_price} and estimate is {estimated_true_value}")
+    #     return "notification sent ok"
+
     def alert(self, opportunity: Opportunity):
         """
-        Make an alert about the specified Opportunity
+        This tool notifies the user of a great deal, given a description of it, the price of the deal, and the estimated true value
         """
-        text = f"Deal Alert! Price=${opportunity.deal.price:.2f}, "
-        text += f"Estimate=${opportunity.estimate:.2f}, "
-        text += f"Discount=${opportunity.discount:.2f} :"
-        text += opportunity.deal.product_description[:10] + "... "
-        text += opportunity.deal.url
-        self.push(text)
-        self.log("Messaging Agent has completed")
+        description = opportunity.deal.product_description[:10] + "... "
+        deal_price = opportunity.deal.price
+        estimated_true_value = opportunity.estimate
+        print(f"Fake function to notify user of {description} which costs {deal_price} and estimate is {estimated_true_value}")
+        return "notification sent ok"
+
+    # def alert(self, opportunity: Opportunity):
+    #     """
+    #     Make an alert about the specified Opportunity
+    #     """
+    #     text = f"Deal Alert! Price=${opportunity.deal.price:.2f}, "
+    #     text += f"Estimate=${opportunity.estimate:.2f}, "
+    #     text += f"Discount=${opportunity.discount:.2f} :"
+    #     text += opportunity.deal.product_description[:10] + "... "
+    #     text += opportunity.deal.url
+    #     self.push(text)
+    #     self.log("Messaging Agent has completed")
 
     def craft_message(
         self, description: str, deal_price: float, estimated_true_value: float
